@@ -1,0 +1,26 @@
+<section class="row">
+    <TitleComponent.hero message="Survey" />
+    
+</section>
+<Component.hero content="Hello from a Function Component">
+    <div>Hello from a Function Component's Slot</div>
+</Component.hero>
+
+<section class="row">
+    <TitleComponent.hero message="Survey" />
+</section>
+    <%= if @demographic do %>
+        <DemographicLive.Show.details demographic={@demographic} />
+        <RatingLive.Index.products products={@products}
+            current_user={@current_user}
+            demographic={@demographic} />
+    <% else %>
+      <.live_component module={DemographicLive.Form}
+        id="demographic-form"
+        current_user={@current_user} />
+<% end %>
+
+
+<%= for item <- ["example","example2","example3"] do %>
+    <ListItemComponent.hero item={item} />
+<% end %>

@@ -25,7 +25,7 @@ defmodule FirstProjectWeb.RatingLive.Index do
     ~H"""
         <%= for {product, index} <- Enum.with_index(@products) do %>
           <%= if rating = List.first(product.ratings) do %>
-            <Show.stars rating={rating} product={product} />
+            <FirstProjectWeb.RatingLive.Show.stars rating={rating} product={product} />
           <% else %>
           <.live_component module={RatingLive.Form}
             id={"rating-form-#{product.id}"}

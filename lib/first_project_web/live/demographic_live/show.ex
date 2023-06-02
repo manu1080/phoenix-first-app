@@ -5,11 +5,13 @@ defmodule FirstProjectWeb.DemographicLive.Show do
   def details(assigns) do
     ~H"""
     <div class="survey-component-container">
-      <h2>Demographics <%= raw "&#x2713;" %></h2>
+    <h2>Demographics <%= raw "&#x2713;" %></h2>
+      <FirstProjectWeb.SurveyLive.ToogleButtonComponent.hero demographics_hide={assigns.demographics_hide}>
       <ul>
         <li>Gender: <%= @demographic.gender %></li>
         <li>Year of birth: <%= @demographic.year_of_birth %></li>
       </ul>
+      </FirstProjectWeb.SurveyLive.ToogleButtonComponent.hero>
     </div>
     """
   end

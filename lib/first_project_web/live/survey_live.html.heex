@@ -10,7 +10,7 @@
     <TitleComponent.hero message="Survey" />
 </section>
     <%= if @demographic do %>
-        <DemographicLive.Show.details demographic={@demographic} />
+        <DemographicLive.Show.details demographic={@demographic}  demographics_hide={@demographics_hide}/>
         <RatingLive.Index.products products={@products}
             current_user={@current_user}
             demographic={@demographic} />

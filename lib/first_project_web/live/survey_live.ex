@@ -9,12 +9,13 @@ defmodule FirstProjectWeb.SurveyLive do
   use FirstProjectWeb, :live_view
 
   def mount(_params, _session, socket) do
-    IO.inspect(socket.assigns.current_user)
 
     {:ok,
      socket
      |> assign_demographic()
-     |> assign_products()}
+     |> assign_products()
+     |> assign_Demographics_hide()
+     |> assign_rating_hide()}
   end
 
   defp assign_demographic(%{assigns: %{current_user: current_user}} = socket) do
@@ -29,6 +30,14 @@ defmodule FirstProjectWeb.SurveyLive do
     assign(socket, :products, list_products(current_user))
   end
 
+  def assign_rating_hide(socket) do
+    assign(socket, :rating_hide, false)
+  end
+
+  def assign_Demographics_hide(socket) do
+    assign(socket, :demographics_hide, false)
+  end
+
   defp list_products(user) do
     Catalog.list_products_with_user_rating(user)
   end
@@ -41,5 +50,26 @@ defmodule FirstProjectWeb.SurveyLive do
     socket
     |> put_flash(:info, "Demographic created successfully")
     |> assign(:demographic, demographic)
+  end
+
+  def handle_info({:created_rating, updated_product, product_index}, socket) do
+    {:noreply, handle_rating_created(socket, updated_product, product_index)}
+  end
+
+  def handle_rating_created(
+        %{assigns: %{products: products}} = socket,
+        updated_product,
+        product_index
+      ) do
+    socket
+    |> put_flash(:info, "Rating submitted successfully")
+    |> assign(
+      :products,
+      List.replace_at(products, product_index, updated_product)
+    )
+  end
+
+  def handle_event("demographics_hide", _, socket) do
+    {:noreply, assign(socket, demographics_hide: not(socket.assigns.demographics_hide))}
   end
 end
